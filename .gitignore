@@ -1,0 +1,9 @@
+db.sqlite3
+__pycache__
+virtualenv/
+*.pyc
+manage.py
+.coverage/
+*~
+geckodriver.log
+.coverage
