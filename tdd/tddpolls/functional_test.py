@@ -24,14 +24,10 @@ class NewVisitorLogInTest(unittest.TestCase):
         # She clicks on the "sign up" link (since
         # she do not have an account)
         
-        # She is prompted to register her email
-        # and choose a username and password
+        # She is prompted to choose a username 
+        # and password
         
-        # A message tells her an email has been sent
-        
-        # She check her email, there is a greeting email
-        
-        # She goes back to the site - after the registration
+        # When she clicks the sig up button
         # she is logged in automatically
         
         # She is suspicious, se logs out
