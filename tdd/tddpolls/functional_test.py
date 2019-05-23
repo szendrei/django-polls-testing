@@ -15,9 +15,14 @@ class NewAnonymousVisitorBlankSiteTest(unittest.TestCase):
         #the title.
         self.browser.get('http://localhost:8000')
         self.assertIn('TDD Polls', self.browser.title)
-        self.fail('Write the tests')
+
+        #The header says it so.
+        header_text = self.browser.find_element_by_tag_name('h1')
+        self.assetIn('TDD Polls', header_text)
         
         #There is no items on the main page.
+        no_elem_text = self.browser.find_element_by_id('no-polls')
+        self.assertIn('No polls created yet.', no_elem_text)
 
         #She cannot do anything so she quits.
         self.browser.quit()
@@ -34,9 +39,17 @@ class NewAnonymousVisitorBlankSiteTest(unittest.TestCase):
 #     def test_new_visitor_sees_polls_and_can_vote(self):
 #         #Edith once again tries the site.
 #         #She sees the title of the newest polls in the main page
-#         self.fail('Write the tests.')
+          #and below the time when the poll was created.
 
-#         #and the number of votes below them.
+#         #She notices that 5 polls are visible on the main page.
+
+#         #She notices the drop-down in the upper left corner.
+#         #It says '5'.
+
+#         #She selects '10' from the options.
+#         #Now there is 10 polls in the main page.
+
+#         #There are the number of votes below them.
 #         #It is 0 in the first place.
 
 #         #She clicks and follows the link in the title of the first poll.
@@ -48,21 +61,12 @@ class NewAnonymousVisitorBlankSiteTest(unittest.TestCase):
 #         #She is redirected to the results page.
 
 #         #She can see the result of her vote, because the first option
-#         #has one vote, and the other has null.
+#         #has 1 vote, and the other has null.
 
 #         #Then she goes back to the main page.
 
 #         #She notices that the vot number of the first poll went up.
 #         #It is 1 now, thanks to her vote.
-
-#     def test_new_visitor_sets_items_on_main_page(self):
-#         #Edith notices the drop-down in the upper left corner.
-#         #It says '5'.
-#         self.fail('Write the tests.')
-#         #She notices that 5 polls are visible on the main page.
-
-#         #She selects '10' from the options.
-#         #Now there is 10 polls in the main page.
 
 #     def test_new_visitor_can_browse_categories(self):
 #         #Edith likes the polls, but she wants them organized.
