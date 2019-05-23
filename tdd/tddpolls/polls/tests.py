@@ -1,6 +1,9 @@
+from django.urls import resolve
 from django.test import TestCase
+from polls.views import main_page
 
-class SmokeTest(TestCase):
+class MainPageTest(TestCase):
 
-    def test_bad_math(self):
-        self.assertEqual(1+1, 3)
+    def test_root_url_resolves_to_main_page(self):
+        main = resolve('/')
+        self.assertEqual(main.func, main_page)
