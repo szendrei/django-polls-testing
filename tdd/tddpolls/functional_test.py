@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import Select
 import unittest
 
 class NewAnonymousVisitorBlankSiteTest(unittest.TestCase):
@@ -17,56 +18,68 @@ class NewAnonymousVisitorBlankSiteTest(unittest.TestCase):
         self.assertIn('TDD Polls', self.browser.title)
 
         #The header says it so.
-        header_text = self.browser.find_element_by_tag_name('h1')
-        self.assetIn('TDD Polls', header_text)
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('Polls', header_text)
         
         #There is no items on the main page.
-        no_elem_text = self.browser.find_element_by_id('no-polls')
+        no_elem_text = self.browser.find_element_by_id('no-polls').text
         self.assertIn('No polls created yet.', no_elem_text)
 
         #She cannot do anything so she quits.
         self.browser.quit()
 
-# class NewAnonymousVisitorTest(unittest.TestCase):
+class NewAnonymousVisitorTest(unittest.TestCase):
 
-#     def setUp(self):
-#         self.browser = webdriver.Firefox()
-#         #create some items here!
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        #create some items here!
 
-#     def tearDown(self):
-#         self.browser.quit()
+    def tearDown(self):
+        self.browser.quit()
 
-#     def test_new_visitor_sees_polls_and_can_vote(self):
-#         #Edith once again tries the site.
-#         #She sees the title of the newest polls in the main page
-          #and below the time when the poll was created.
+    def test_new_visitor_sees_polls_and_can_vote(self):
+        #Edith once again tries the site.
+        self.browser.get('http://localhost:8000')
+        #She sees the title of the newest polls in the main page
+        #and below the time when the poll was created.
+        poll_titles = self.browser.find_elements_by_css_selector('h3.poll-title')
+        poll_created_date = self.browser.find_elements_by_css_selector('p.poll-crate-date')
+        self.assertEqual(poll_titles[0].text, 'Do you like this site?')
+        self.assertEqual(poll_created_date[0].text, '01/01/2019')
 
-#         #She notices that 5 polls are visible on the main page.
+        #She notices that 5 polls are visible on the main page.
+        self.assertEqual(len(poll_titles), 5)
 
-#         #She notices the drop-down in the upper left corner.
-#         #It says '5'.
+        #She notices the drop-down in the upper left corner.
+        #It says '5'.
+        poll_number_select = Select(self.browser.find_element_by_name('polls-limit'))
+        self.assertEqual(poll_number_select.options[0], '5')
 
-#         #She selects '10' from the options.
-#         #Now there is 10 polls in the main page.
+        #She selects '10' from the options.
+        poll_number_select.select_by_visible_text('10')
 
-#         #There are the number of votes below them.
-#         #It is 0 in the first place.
+        #Now there is 10 polls in the main page.
+        self.assertEqual(len(poll_titles), 10)
+        self.fail('Write the tests first.')
 
-#         #She clicks and follows the link in the title of the first poll.
+        #There are the number of votes below the polls.
+        #It is 0 in the first place.
 
-#         #She arrives to the page where she can vote.
+        #She clicks and follows the link in the title of the first poll.
 
-#         #She selects the option she likes and hits 'Vote' to submit.
+        #She arrives to the page where she can vote.
 
-#         #She is redirected to the results page.
+        #She selects the option she likes and hits 'Vote' to submit.
 
-#         #She can see the result of her vote, because the first option
-#         #has 1 vote, and the other has null.
+        #She is redirected to the results page.
 
-#         #Then she goes back to the main page.
+        #She can see the result of her vote, because the first option
+        #has 1 vote, and the other has null.
 
-#         #She notices that the vot number of the first poll went up.
-#         #It is 1 now, thanks to her vote.
+        #Then she goes back to the main page.
+
+        #She notices that the vot number of the first poll went up.
+        #It is 1 now, thanks to her vote.
 
 #     def test_new_visitor_can_browse_categories(self):
 #         #Edith likes the polls, but she wants them organized.
