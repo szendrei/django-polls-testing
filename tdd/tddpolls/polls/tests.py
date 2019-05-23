@@ -11,9 +11,5 @@ class MainPageTest(TestCase):
         self.assertEqual(main.func, main_page)
 
     def test_main_page_returns_correct_HTML(self):
-        request = HttpRequest()
-        response = main_page(request)
-        html = response.content.decode('utf-8')
-        self.assertTrue(html.startswith('<html>'))
-        self.assertInHTML('<title>TDD Polls</title>', html)
-        self.assertTrue(html.endswith('</html>'))
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
